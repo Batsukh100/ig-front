@@ -22,7 +22,7 @@ import { toast } from "sonner";
 // };
 
 const Page = () => {
-  const { login, user, setUser } = UseUser();
+  const { setUser } = UseUser();
   const [userCreate, setUserCreate] = useState({
     email: "",
     password: "",

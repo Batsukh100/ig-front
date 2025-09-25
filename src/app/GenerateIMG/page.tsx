@@ -9,14 +9,14 @@ import { ChangeEvent, useState } from "react";
 const GenerateIMG = () => {
   const [inputValue, setInputValue] = useState("");
   const [Image, setImage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const HF_API_KEY = process.env.HF_API_KEY;
 
   const generateImg = async () => {
     if (!inputValue.trim()) return;
 
-    setIsLoading(true);
+    // setIsLoading(true);
     setImage("");
     const response = await fetch(
       "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
@@ -66,7 +66,7 @@ const GenerateIMG = () => {
         <div>
           <h2 className="text-2xl font-bold ">Explore AI generated images</h2>
           <h6 className="font-extralight">
-            Describe what's on your mind. For best results, be specific
+            Describe what is on your mind. For best results, be specific
           </h6>
         </div>
         <div>

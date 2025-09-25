@@ -29,7 +29,7 @@ export const AuthContext = createContext<ContextType | null>(null);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
   useEffect(() => {
     const userItem = localStorage.getItem("user");

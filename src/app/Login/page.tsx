@@ -1,6 +1,5 @@
 "use client";
 
-
 import IG from "@/images/IG.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { UseUser } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
-import { toast } from "sonner";
 
 const Login = () => {
   const { login, user } = UseUser();
