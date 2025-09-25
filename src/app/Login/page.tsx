@@ -1,12 +1,12 @@
 "use client";
 
-import IG from "@/images/IG.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UseUser } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
+import { IGIcon } from "@/icons/IgIcon";
 
 const Login = () => {
   const { login, user } = UseUser();
@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col items-center gap-5 border-0 border-solid border-e-white ">
-      <img src={IG.src} className="w-[48px] h-[48px] " />
+      <IGIcon />
       <div className="flex flex-col gap-4 item-center justify-center ">
         <div className="w-[300px]">
           <Input
@@ -66,7 +66,7 @@ const Login = () => {
         </div>
       </div>
       <div className="flex">
-        <Label>Don't have an account </Label>
+        <Label>Do not have an account </Label>
         <Button
           variant="ghost"
           className="text-blue-400"

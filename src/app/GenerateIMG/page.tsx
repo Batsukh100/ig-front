@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { upload } from "@vercel/blob/client";
-import { error } from "console";
 import { ChangeEvent, useState } from "react";
 
 const GenerateIMG = () => {

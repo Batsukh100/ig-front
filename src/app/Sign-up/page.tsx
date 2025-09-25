@@ -1,6 +1,5 @@
 "use client";
 
-import IG from "@/images/IG.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,6 +7,8 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { UseUser } from "@/providers/AuthProvider";
 import { toast } from "sonner";
+import { IGIcon } from "@/icons/IgIcon";
+import { ScreenShot } from "@/icons/screenshot";
 
 // const UserCreateType = {
 //   email: { type: String, required: true },
@@ -79,7 +80,7 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-4 justify-self-center items-center ">
       <div className="w-[300px] flex flex-col items-center gap-4 ">
-        <img src={IG.src} className="w-[48px] h-[48px] " />
+        <IGIcon />
         <Label>Sign up to see photos and videos from your friends</Label>
       </div>
       <div className="w-[300px] flex flex-col ">
