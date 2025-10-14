@@ -9,10 +9,15 @@ const CreatePost = () => {
   const pushToAI = () => {
     push("/GenerateIMG");
   };
+  const pushToMain = () => {
+    push("/");
+  };
   return (
     <div>
       <div>
-        <Button variant="ghost">X</Button>
+        <Button variant="ghost" onClick={pushToMain}>
+          X
+        </Button>
         <span>New photo post</span>
       </div>
       <div>

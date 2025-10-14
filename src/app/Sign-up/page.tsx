@@ -9,6 +9,7 @@ import { UseUser } from "@/providers/AuthProvider";
 import { toast } from "sonner";
 import { IGIcon } from "@/icons/IgIcon";
 import { ScreenShot } from "@/icons/screenshot";
+import { jwtDecode } from "jwt-decode";
 
 // const UserCreateType = {
 //   email: { type: String, required: true },
@@ -21,9 +22,10 @@ import { ScreenShot } from "@/icons/screenshot";
 //   updatedAt: { type: Date, default: Date.now() },
 //   createdAt: { type: Date, default: Date.now() },
 // };
+import { decodedTokenType } from "@/providers/AuthProvider";
 
 const Page = () => {
-  const { setUser } = UseUser();
+  const { setUser, setToken } = UseUser();
   const [userCreate, setUserCreate] = useState({
     email: "",
     password: "",
@@ -65,11 +67,15 @@ const Page = () => {
       }),
     });
     if (response.ok) {
-      const user = await response.json();
-      setUser(user);
-      // localStorage.setItem("user", JSON.stringify(user));
+      const token = await response.json();
+      localStorage.setItem("token", token);
+      setToken(token);
+      const decodedToken: decodedTokenType = jwtDecode(token);
+      setUser(decodedToken.data);
       toast.success("Success");
       push("/");
+    } else {
+      toast.error("Try harder");
     }
   };
 

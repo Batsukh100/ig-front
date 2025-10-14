@@ -1,5 +1,7 @@
 "use client";
 
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 import {
   createContext,
   Dispatch,
@@ -10,30 +12,49 @@ import {
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
-type User = {
+export type User = {
+  _id: string;
   email: string;
   password: string;
   username: string;
   bio: string | null;
   profilePicture: string | null;
+  followers: string[];
+  following: string[];
 };
 
 type ContextType = {
   login: (email: string, password: string) => Promise<void>;
   user: User | null;
   setUser: Dispatch<SetStateAction<null | User>>;
+  setToken: Dispatch<SetStateAction<null | User>>;
+  token: string | null;
+};
+
+export type decodedTokenType = {
+  data: User;
 };
 
 export const AuthContext = createContext<ContextType | null>(null);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const { push } = useRouter();
+
   // const { push } = useRouter();
 
   useEffect(() => {
-    const userItem = localStorage.getItem("user");
-    if (userItem) {
-      setUser(JSON.parse(userItem));
+    const localToken = localStorage.getItem("token");
+    if (typeof window !== undefined) {
+      if (localToken) {
+        setToken(localToken);
+        const decodedToken: decodedTokenType = jwtDecode(localToken);
+        setUser(decodedToken.data);
+        // push("/");
+      } else {
+        push("/Login");
+      }
     }
   }, []);
 
@@ -47,16 +68,17 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       }),
     });
     if (response.ok) {
-      const user = await response.json();
-      setUser(user);
-      localStorage.setItem("user", JSON.stringify(user));
+      const token = await response.json();
+      localStorage.setItem("token", token);
+      const decodedToken: decodedTokenType = jwtDecode(token);
+      setUser(decodedToken.data);
       toast.success("Success");
     } else {
       toast.error("wrong password try again");
     }
   };
 
-  const values = { login, user, setUser };
+  const values = { login, user, setUser, token, setToken };
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
