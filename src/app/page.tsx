@@ -112,6 +112,7 @@ const Page = () => {
                   <div>{post?.caption}</div>
                 </div>
               </div>
+              <div className="border w-full border-black"></div>
             </div>
           );
         })}
