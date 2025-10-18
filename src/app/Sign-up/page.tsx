@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { UseUser } from "@/providers/AuthProvider";
 import { toast } from "sonner";
 import { IGIcon } from "@/icons/IgIcon";
-import { ScreenShot } from "@/icons/screenshot";
 import { jwtDecode } from "jwt-decode";
 
 // const UserCreateType = {

@@ -71,7 +71,13 @@ const Profile = () => {
           </div>
           <div>
             <div className="font-bold text-xl pb-4 ">{user?.username}</div>
-            <Button>Edit profile</Button>
+            <Button
+              onClick={() => {
+                push("/EditProfile");
+              }}
+            >
+              Edit profile
+            </Button>
           </div>
         </div>
         <div>{user?.bio}</div>
@@ -100,14 +106,3 @@ const Profile = () => {
 
 export default Profile;
 
-//  <div>
-//         <div></div>
-//         <div></div>
-//         <div></div>
-//       </div>
-//       <div>
-//         <div></div>
-//         <div></div>
-//         <div></div>
-//         <div></div>
-//       </div>
