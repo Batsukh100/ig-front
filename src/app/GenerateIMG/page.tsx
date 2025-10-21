@@ -16,7 +16,7 @@ const GenerateIMG = () => {
   const { token } = UseUser();
   const { push } = useRouter();
 
-  const HF_API_KEY = process.env.HF_API_KEY
+  const HF_API_KEY = process.env.HF_API_KEY;
 
   const generateImg = async () => {
     if (!inputValue.trim()) return;
@@ -90,41 +90,68 @@ const GenerateIMG = () => {
   };
 
   return (
-    <div>
-      <div>
-        <Button variant="ghost" onClick={() => pushToMain()}>
-          X
+    <div className="max-w-xl mx-auto p-6 space-y-8 bg-white rounded-xl shadow-2xl">
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          onClick={() => pushToMain()}
+          className="border-gray-300 shadow-lg"
+        >
+          ✕
         </Button>
-        <span>New photo post</span>
+        <span className="text-lg font-medium text-gray-700">
+          New Photo Post
+        </span>
       </div>
-      <div className="flex flex-col gap-6">
-        <div>
-          <h2 className="text-2xl font-bold ">Explore AI generated images</h2>
-          <h6 className="font-extralight">
-            Describe what is on your mind. For best results, be specific
-          </h6>
-        </div>
-        <div className=" flex flex-col items-center">
-          <Textarea
-            className="w-[398px] h-[102px]"
-            placeholder="Example: Im walking in fog like Bladerunner 2049"
-            name="generateInput"
-            onChange={(e) => handleValue(e)}
-          />
-          <Button className="bg-blue-500 " onClick={() => generateImg()}>
-            {isLoading === true ? "Generating" : "Generate"}
-          </Button>
-        </div>
+
+      <div className="space-y-1">
+        <h2 className="text-2xl font-bold text-gray-900">
+          Explore AI-Generated Images
+        </h2>
+        <p className="text-sm text-gray-500">
+          Describe what is on your mind. For best results, be specific.
+        </p>
       </div>
-      <img src={Image} />
-      <div className=" flex flex-col items-center">
+      <div className="space-y-4 shadow-md p-4 rounded-lg bg-gray-50">
         <Textarea
-          className="w-[398px] h-[102px]  "
-          placeholder="Your caption area"
+          className="w-full h-[100px] resize-none shadow-sm"
+          placeholder="Example: I'm walking in fog like Blade Runner 2049"
+          name="generateInput"
+          onChange={(e) => handleValue(e)}
+        />
+        <Button
+          className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md"
+          onClick={() => generateImg()}
+        >
+          {isLoading ? "Generating..." : "Generate Image"}
+        </Button>
+      </div>
+
+      {/* Generated Image */}
+      {Image && (
+        <div className="w-full shadow-md rounded-lg overflow-hidden">
+          <img
+            src={Image}
+            alt="Generated preview"
+            className="w-full object-cover"
+          />
+        </div>
+      )}
+
+      {/* Caption Input & Create Post Button */}
+      <div className="space-y-4 shadow-md p-4 rounded-lg bg-gray-50">
+        <Textarea
+          className="w-full h-[100px] resize-none shadow-sm"
+          placeholder="Write a caption..."
           name="captionInput"
           onChange={(e) => handleCaption(e)}
         />
-        <Button onClick={() => createPost()}> Create Post</Button>
+        <Button
+          className="w-full bg-green-600 text-white hover:bg-green-700 transition-colors shadow-md"
+          onClick={() => createPost()}
+        >
+          Create Post
+        </Button>
       </div>
     </div>
   );

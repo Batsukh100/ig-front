@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/app/_components/Footer";
 import { userpostType } from "@/app/Profile/page";
 import { Button } from "@/components/ui/button";
 import { User, UseUser } from "@/providers/AuthProvider";
@@ -27,9 +28,9 @@ export type OtherUser = {
 type otherProfile = {
   username: ReactNode;
   profilePicture: string | Blob | undefined;
-  bio: ReactNode;
-  followers: ReactNode;
-  following: ReactNode;
+  bio: string;
+  followers: string[];
+  following: string[];
   setPosts: Dispatch<SetStateAction<OtherUser>>;
   userData: OtherUser;
   map(arg0: (post: any, index: any) => JSX.Element): ReactNode;
@@ -100,8 +101,8 @@ const Page = () => {
       </div>
       <div className="flex justify-around border-2 h-[60px] items-center mt-4 ">
         <div>{posts.length} Posts</div>
-        <div> Followers</div>
-        <div> Following</div>
+        <div>{userData.followers?.length} Followers</div>
+        <div>{userData.following?.length} Following</div>
       </div>{" "}
       <div className="flex gap-1 flex-wrap mt-1 ">
         {posts.map((post, index) => {
@@ -112,6 +113,7 @@ const Page = () => {
           );
         })}
       </div>
+      <Footer />
     </div>
   );
 };

@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type PostType = {
+export type PostType = {
   _id: string;
   caption: string;
   images: string[];
@@ -92,7 +92,6 @@ const Page = () => {
                 </Link>
                 <Button onClick={() => follow(post.user._id)}>Follow</Button>
               </div>
-
               <img src={post?.images[0]} />
               <div className=" ">
                 <div className="flex gap-2">
@@ -104,7 +103,11 @@ const Page = () => {
                     )}
                   </div>
                   {post?.like.length}
-                  <MessageCircle />
+                  <MessageCircle
+                    onClick={() => {
+                      push(`/Comment/${post._id}`);
+                    }}
+                  />
                 </div>
                 <div className="flex gap-2">
                   <div className="font-semibold ">{post.user?.username}</div>

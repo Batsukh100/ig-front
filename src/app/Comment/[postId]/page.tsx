@@ -65,7 +65,7 @@ const Comment = () => {
       <div>
         {getCom.map((com) => {
           return (
-            <div className="flex mb-2 ">
+            <div key={com._id} className="flex mb-2 ">
               <Avatar>
                 <AvatarImage src={com.userId.profilePicture} />
                 <AvatarFallback>CN</AvatarFallback>

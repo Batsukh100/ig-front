@@ -48,7 +48,7 @@ const Edit = () => {
   };
   useEffect(() => {
     if (token) {
-      editData;
+      editData();
     }
   }, [token]);
 
