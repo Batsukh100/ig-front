@@ -51,7 +51,9 @@ const Search = () => {
       <div className="mb-10">
         {filterred.map((user) => {
           return (
-            <div key={user?._id} className="flex gap-2 mb-2 ">
+            <div
+              key={user?._id}
+              className="flex gap-2 mb-2 border-2 border-grey rounded-xl shadow-lg items-center ">
               <Avatar className="w-[42px] h-[42px]">
                 <AvatarImage src={user.profilePicture} />
                 <AvatarFallback>CN</AvatarFallback>
@@ -60,8 +62,7 @@ const Search = () => {
                 onClick={() => {
                   push(`UserProfile/${user._id}`);
                 }}
-                className="flex justify-center"
-              >
+                className="flex justify-center">
                 {user?.username}
               </div>
             </div>

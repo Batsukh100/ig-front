@@ -5,6 +5,7 @@ import { userpostType } from "@/app/Profile/page";
 import { Button } from "@/components/ui/button";
 import { User, UseUser } from "@/providers/AuthProvider";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   Dispatch,
   JSX,
@@ -25,7 +26,8 @@ export type OtherUser = {
   following: string[];
 };
 
-type otherProfile = {
+export type otherProfile = {
+  _id: any;
   username: ReactNode;
   profilePicture: string | Blob | undefined;
   bio: string;
@@ -40,6 +42,7 @@ const Page = () => {
   const params = useParams();
   const userId = params.userId;
   const { token } = UseUser();
+  const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
   const [userData, setUserData] = useState<otherProfile>([]);
 
@@ -107,7 +110,11 @@ const Page = () => {
       <div className="flex gap-1 flex-wrap mt-1 ">
         {posts.map((post, index) => {
           return (
-            <div key={post.user._id}>
+            <div
+              key={post.user._id}
+              onClick={() => {
+                push(`/UserAll/${userId}`);
+              }}>
               <img src={post.images} className="w-[130px] h-[188px] " />
             </div>
           );

@@ -10,6 +10,7 @@ import Footer from "./_components/Footer";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export type PostType = {
   _id: string;
@@ -23,7 +24,6 @@ const Page = () => {
   const { user, token } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<PostType[]>([]);
-  if (!user) push("/Login");
 
   const getPostHandle = async () => {
     const allPosts = await fetch("http://localhost:5555/Post/Get", {
@@ -81,16 +81,22 @@ const Page = () => {
           return (
             <div key={index} className="mt-6">
               <div className="flex items-center gap-2 mb-2 ">
-                <img
-                  src={post.user?.profilePicture}
-                  className="w-[42px] h-[42px] rounded-4xl "
-                />
+                <Avatar className="w-[42px] h-[42px]">
+                  <AvatarImage src={post.user?.profilePicture} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
                 <Link href={`/UserProfile/${post.user?._id!}`}>
                   <div className="font-semibold text-xs text-gray-800 hover:underline">
                     {post.user?.username}
                   </div>
                 </Link>
-                <Button onClick={() => follow(post.user._id)}>Follow</Button>
+                {post.user.followers.includes(user?._id) ? (
+                  <Button onClick={() => follow(post.user._id)}>
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button onClick={() => follow(post.user._id)}>Follow</Button>
+                )}
               </div>
               <img src={post?.images[0]} />
               <div className=" ">
