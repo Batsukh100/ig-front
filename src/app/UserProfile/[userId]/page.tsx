@@ -21,21 +21,20 @@ export type OtherUser = {
   password: string;
   username: string;
   bio: string | null;
-  profilePicture: string | null;
+  profilePicture: string | Blob | undefined;
   followers: string[];
   following: string[];
 };
 
 export type otherProfile = {
-  _id: any;
-  username: ReactNode;
+  _id: string;
+  username: string;
   profilePicture: string | Blob | undefined;
   bio: string;
   followers: string[];
   following: string[];
   setPosts: Dispatch<SetStateAction<OtherUser>>;
-  userData: OtherUser;
-  map(arg0: (post: any, index: any) => JSX.Element): ReactNode;
+  userData: OtherUser[];
 };
 
 const Page = () => {
@@ -107,14 +106,15 @@ const Page = () => {
         <div>{userData.followers?.length} Followers</div>
         <div>{userData.following?.length} Following</div>
       </div>{" "}
-      <div className="flex gap-1 flex-wrap mt-1 ">
+      <div className="flex gap-1 flex-wrap ">
         {posts.map((post, index) => {
           return (
             <div
               key={post.user._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}>
+              }}
+            >
               <img src={post.images} className="w-[130px] h-[188px] " />
             </div>
           );

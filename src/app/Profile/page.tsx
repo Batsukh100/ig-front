@@ -40,8 +40,8 @@ export type Post = {
 export type userpostType = {
   like: any;
   caption: ReactNode;
-  _id: Key | null | undefined;
-  images: string;
+  _id: string;
+  images: string | Blob;
   user: User;
   map(arg0: (post: any, index: any) => JSX.Element): ReactNode;
   userPost: Post;
@@ -145,7 +145,8 @@ const Profile = () => {
                     e.preventDefault();
                     // энд API дуудалт хийгээд dialog-оо хаах логик хийнэ
                   }}
-                  className="space-y-4 mt-4">
+                  className="space-y-4 mt-4"
+                >
                   <div className="flex flex-col gap-2">
                     <label htmlFor="username" className="text-sm font-medium">
                       Username
@@ -200,7 +201,8 @@ const Profile = () => {
               key={post._id}
               onClick={() => {
                 push("/MyAll");
-              }}>
+              }}
+            >
               <img src={post.images} className="w-[130px] h-[188px] " />
             </div>
           );

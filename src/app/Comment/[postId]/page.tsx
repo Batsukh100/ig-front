@@ -6,6 +6,7 @@ import { ChangeEvent, JSX, useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Footer from "@/app/_components/Footer";
 
 export type COM = {
   map(arg0: (com: any) => JSX.Element): import("react").ReactNode;
@@ -60,8 +61,8 @@ const Comment = () => {
   }, [token]);
 
   return (
-    <div className="w-[380px]">
-      <div>
+    <div className="w-[380px] h-[650px] overflow-scroll ">
+      <div className="" >
         {getCom.map((com) => {
           return (
             <div key={com._id} className="flex mb-2 gap-2 ">
@@ -87,6 +88,9 @@ const Comment = () => {
         <div className="flex justify-center mt-2">
           <Send onClick={() => writeComment()} />
         </div>
+      </div>
+      <div className="mt-10 border-black">
+        <Footer />
       </div>
     </div>
   );

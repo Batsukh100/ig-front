@@ -53,7 +53,6 @@ const UserAll = () => {
 
   useEffect(() => {
     if (token) {
-      LikePosts();
       Postfetch();
       Userfetch();
     }
@@ -85,8 +84,8 @@ const UserAll = () => {
                 <Ellipsis />
               </div>
 
-              <img src={post?.images[0]} />
-              <div className=" ">
+              <img src={post?.images} />
+              <div>
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>
                     {post.like.includes(userData?._id!) ? (
