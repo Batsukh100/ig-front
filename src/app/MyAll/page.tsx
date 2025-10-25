@@ -15,7 +15,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -47,13 +46,10 @@ const MyAll = () => {
   };
 
   const LikePosts = async (postId: string) => {
-    const res = await fetch(
-      `http://localhost:5555/Post/like-toggle/${postId}`,
-      {
-        method: "POST",
-        headers: { authorization: `Bearer ${token}` },
-      }
-    );
+    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${token}` },
+    });
     UserPost();
   };
 
@@ -94,6 +90,11 @@ const MyAll = () => {
         imgUrl: input.imgUrl,
       }),
     });
+    if (res.ok) {
+      toast.success("Edit post success");
+    } else {
+      toast.error("gg aldaa garlaa ");
+    }
     UserPost();
   };
 
@@ -116,7 +117,7 @@ const MyAll = () => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2 mb-2 ">
                   <img
-                    src={user?.profilePicture}
+                    src={user!.profilePicture!}
                     className="w-[42px] h-[42px] rounded-4xl "
                   />
                   <Link href={`/Profile`}>
@@ -189,7 +190,7 @@ const MyAll = () => {
               <div className=" ">
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(user?._id!) ? (
+                    {post.like.includes(user!._id) ? (
                       <Heart color="red" fill="red" />
                     ) : (
                       <Heart />
@@ -203,7 +204,7 @@ const MyAll = () => {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <div className="font-semibold ">{post.user?.username}</div>
+                  <div className="font-semibold ">{user?.username}</div>
                   {"  "}
                   <div>{post?.caption}</div>
                 </div>

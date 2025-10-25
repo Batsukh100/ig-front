@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const GenerateIMG = () => {
   const [inputValue, setInputValue] = useState("");
   const [CaptionValue, setCaptionValue] = useState("");
-  const [Image, setImage] = useState("");
+  const [Image, setImage] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { token } = UseUser();
   const { push } = useRouter();
@@ -22,7 +22,6 @@ const GenerateIMG = () => {
     if (!inputValue.trim()) return;
 
     setIsLoading(true);
-    setImage("");
     const response = await fetch(
       "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
       {
@@ -51,8 +50,8 @@ const GenerateIMG = () => {
         access: "public",
         handleUploadUrl: "/api/upload",
       });
-      setImage(uploaded.url);
-      console.log(uploaded);
+      setImage((prev) => [...prev, uploaded.url]);
+      setIsLoading(false);
     }
   };
 
@@ -80,7 +79,7 @@ const GenerateIMG = () => {
     }
   };
 
-  const handleValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
   };
@@ -127,7 +126,6 @@ const GenerateIMG = () => {
         </Button>
       </div>
 
-      {/* Generated Image */}
       {Image && (
         <div className="w-full shadow-md rounded-lg overflow-hidden">
           <img
@@ -138,7 +136,6 @@ const GenerateIMG = () => {
         </div>
       )}
 
-      {/* Caption Input & Create Post Button */}
       <div className="space-y-4 shadow-md p-4 rounded-lg bg-gray-50">
         <Textarea
           className="w-full h-[100px] resize-none shadow-sm"

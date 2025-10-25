@@ -1,6 +1,6 @@
 "use client";
 
-import { UseUser } from "@/providers/AuthProvider";
+import { User, UseUser } from "@/providers/AuthProvider";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -8,7 +8,6 @@ import { Ellipsis, Heart, MessageCircle } from "lucide-react";
 import { userpostType } from "@/app/Profile/page";
 import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
-import { otherProfile } from "@/app/UserProfile/[userId]/page";
 
 const UserAll = () => {
   const params = useParams();
@@ -16,7 +15,7 @@ const UserAll = () => {
   const { token } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
-  const [userData, setUserData] = useState<otherProfile>([]);
+  const [userData, setUserData] = useState<User>([]);
 
   const Postfetch = async () => {
     const res = await fetch(`http://localhost:5555/Post/user/${userId}`, {
@@ -42,13 +41,10 @@ const UserAll = () => {
   };
 
   const LikePosts = async (postId: string) => {
-    const res = await fetch(
-      `http://localhost:5555/Post/like-toggle/${postId}`,
-      {
-        method: "POST",
-        headers: { authorization: `Bearer ${token}` },
-      }
-    );
+    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${token}` },
+    });
   };
 
   useEffect(() => {
@@ -88,7 +84,7 @@ const UserAll = () => {
               <div>
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(userData?._id!) ? (
+                    {post.like.includes(userData!._id!) ? (
                       <Heart color="red" fill="red" />
                     ) : (
                       <Heart />
@@ -102,7 +98,7 @@ const UserAll = () => {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <div className="font-semibold ">{post.user?.username}</div>
+                  <div className="font-semibold ">{userData?.username}</div>
                   {"  "}
                   <div>{post?.caption}</div>
                 </div>

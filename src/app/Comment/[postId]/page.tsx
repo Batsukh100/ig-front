@@ -2,20 +2,23 @@
 
 import { User, UseUser } from "@/providers/AuthProvider";
 import { useParams } from "next/navigation";
-import { ChangeEvent, JSX, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Footer from "@/app/_components/Footer";
+import { PostType } from "@/app/page";
 
-export type COM = {
-  map(arg0: (com: any) => JSX.Element): import("react").ReactNode;
+export type Com = {
+  _id: string;
+  comment: string;
+  postId: PostType;
   userId: User;
 };
 
 const Comment = () => {
   const { token } = UseUser();
-  const [getCom, setGetCom] = useState<COM>([]);
+  const [getCom, setGetCom] = useState<Com[]>([]);
   const [input, setInput] = useState("");
   const params = useParams();
   const postId = params.postId;
@@ -62,22 +65,7 @@ const Comment = () => {
 
   return (
     <div className="w-[380px] h-[650px] overflow-scroll ">
-      <div className="" >
-        {getCom.map((com) => {
-          return (
-            <div key={com._id} className="flex mb-2 gap-2 ">
-              <Avatar className="w-[42px] h-[42px]">
-                <AvatarImage src={com.userId.profilePicture} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex gap-2 items-center">
-                <div className="font-bold">{com.userId.username}</div>
-                <div className=" flex flex-wrap w-[380px]">{com.comment}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      {" "}
       <div className="flex gap-2 ">
         <Input
           placeholder="add your comment here..."
@@ -88,6 +76,25 @@ const Comment = () => {
         <div className="flex justify-center mt-2">
           <Send onClick={() => writeComment()} />
         </div>
+      </div>
+      <div className="">
+        {getCom.map((com) => {
+          return (
+            <div
+              key={com._id}
+              className="flex mb-2 gap-2 border-2 shadow-2xl rounded-3xl "
+            >
+              <Avatar className="w-[42px] h-[42px]">
+                <AvatarImage src={com.userId.profilePicture!} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex gap-2 items-center">
+                <div className="font-bold">{com.userId.username}</div>
+                <div className=" flex flex-wrap w-[380px]">{com.comment}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div className="mt-10 border-black">
         <Footer />

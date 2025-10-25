@@ -3,17 +3,10 @@
 import Footer from "@/app/_components/Footer";
 import { userpostType } from "@/app/Profile/page";
 import { Button } from "@/components/ui/button";
-import { User, UseUser } from "@/providers/AuthProvider";
+import { UseUser } from "@/providers/AuthProvider";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import {
-  Dispatch,
-  JSX,
-  ReactNode,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export type OtherUser = {
   _id: string;
@@ -21,7 +14,7 @@ export type OtherUser = {
   password: string;
   username: string;
   bio: string | null;
-  profilePicture: string | Blob | undefined;
+  profilePicture: string | null;
   followers: string[];
   following: string[];
 };
@@ -29,12 +22,12 @@ export type OtherUser = {
 export type otherProfile = {
   _id: string;
   username: string;
-  profilePicture: string | Blob | undefined;
+  profilePicture: string | null;
   bio: string;
   followers: string[];
   following: string[];
   setPosts: Dispatch<SetStateAction<OtherUser>>;
-  userData: OtherUser[];
+  userData: OtherUser;
 };
 
 const Page = () => {
@@ -107,7 +100,7 @@ const Page = () => {
         <div>{userData.following?.length} Following</div>
       </div>{" "}
       <div className="flex gap-1 flex-wrap ">
-        {posts.map((post, index) => {
+        {posts.map((post) => {
           return (
             <div
               key={post.user._id}

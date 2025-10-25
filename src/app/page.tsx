@@ -12,6 +12,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -44,13 +51,10 @@ const Page = () => {
   };
 
   const LikePosts = async (postId: string) => {
-    const res = await fetch(
-      `http://localhost:5555/Post/like-toggle/${postId}`,
-      {
-        method: "POST",
-        headers: { authorization: `Bearer ${token}` },
-      }
-    );
+    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${token}` },
+    });
 
     getPostHandle();
   };
@@ -108,9 +112,12 @@ const Page = () => {
                 <div className="flex items-center gap-2 mb-2">
                   <Avatar className="w-[42px] h-[42px]">
                     <AvatarImage src={post.user?.profilePicture} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {" "}
+                      {user?.username?.[0]?.toUpperCase() || "?"}
+                    </AvatarFallback>
                   </Avatar>
-                  <Link href={`/UserProfile/${post.user?._id!}`}>
+                  <Link href={`/UserProfile/${post!.user!._id!}`}>
                     <div className="font-semibold text-xs text-gray-800 hover:underline">
                       {post.user?.username}
                     </div>
@@ -137,7 +144,7 @@ const Page = () => {
                         </DialogClose>
                       </DialogContent>
                     </Dialog>
-                  ) : post.user.followers.includes(myId) ? (
+                  ) : post.user.followers.includes(user!._id) ? (
                     <Button
                       variant="secondary"
                       onClick={() => follow(post.user._id)}
@@ -154,11 +161,22 @@ const Page = () => {
                   )}
                 </div>
               </div>
-              <img src={post?.images[0]} />
+
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {post.images.map((postImage, Index) => (
+                    <CarouselItem key={Index}>
+                      <img src={postImage} className="w-full" />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious hidden={true} />
+                <CarouselNext hidden={true} />
+              </Carousel>
               <div className=" ">
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(user?._id!) ? (
+                    {post.like.includes(myId!) ? (
                       <Heart color="red" fill="red" />
                     ) : (
                       <Heart />

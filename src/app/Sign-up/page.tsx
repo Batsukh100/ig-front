@@ -10,17 +10,6 @@ import { toast } from "sonner";
 import { IGIcon } from "@/icons/IgIcon";
 import { jwtDecode } from "jwt-decode";
 
-// const UserCreateType = {
-//   email: { type: String, required: true },
-//   password: { type: String, required: true },
-//   username: { type: String, required: true },
-//   bio: { type: String, required: false },
-//   profilePicture: { type: String, required: false },
-//   followers: [{ type: Schema.Types.ObjectId, required: true }],
-//   follewing: [{ type: Schema.Types.ObjectId, required: true }],
-//   updatedAt: { type: Date, default: Date.now() },
-//   createdAt: { type: Date, default: Date.now() },
-// };
 import { decodedTokenType } from "@/providers/AuthProvider";
 
 const Page = () => {
