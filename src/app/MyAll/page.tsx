@@ -21,12 +21,17 @@ import {
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 const MyAll = () => {
   const { user, token } = UseUser();
   const [posts, setPosts] = useState<PostType[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen, setIsOpen] = useState<string | null>(null);
+  const [Edit, setEdit] = useState<string | null>(null);
   const [input, setInput] = useState({
     caption: "",
     imgUrl: "",
@@ -126,7 +131,9 @@ const MyAll = () => {
                     </div>
                   </Link>
                 </div>
-                <Dialog open={isOpen2} onOpenChange={setIsOpen2}>
+                <Dialog
+                  open={isOpen === post._id}
+                  onOpenChange={(open) => setIsOpen(open ? post._id : null)}>
                   <DialogTrigger asChild>
                     <Ellipsis />
                   </DialogTrigger>
@@ -141,12 +148,13 @@ const MyAll = () => {
                     <Button
                       onClick={() => {
                         DeletePost(post._id);
-                        setIsOpen2(false);
-                      }}
-                    >
+                        setIsOpen(null);
+                      }}>
                       Delete Post
                     </Button>
-                    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                    <Dialog
+                      open={Edit === post._id}
+                      onOpenChange={(open) => setEdit(open ? post._id : null)}>
                       <DialogTrigger>
                         <Button className="w-[320px]">Edit</Button>
                       </DialogTrigger>
@@ -169,16 +177,20 @@ const MyAll = () => {
                         <Button
                           onClick={async () => {
                             await editPost(post._id);
-                            setIsOpen(false);
-                            setIsOpen2(false);
-                          }}
-                        >
+                            setIsOpen(null);
+                            setEdit(null);
+                          }}>
                           Edit post
                         </Button>
                       </DialogContent>
                     </Dialog>
                     <DialogClose asChild>
-                      <Button type="button" variant="secondary">
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => {
+                          setIsOpen(null);
+                        }}>
                         Cancel
                       </Button>
                     </DialogClose>
@@ -186,7 +198,20 @@ const MyAll = () => {
                 </Dialog>
               </div>
 
-              <img src={post?.images[0]} />
+              <Carousel className="w-full rounded-xl overflow-hidden mb-3">
+                <CarouselContent>
+                  {post.images.map((img, idx) => (
+                    <CarouselItem key={idx}>
+                      <img
+                        src={img}
+                        className="w-full h-[400px] object-cover rounded-xl"
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+
+              {/* <img src={post?.images[0]} /> */}
               <div className=" ">
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>
@@ -202,6 +227,7 @@ const MyAll = () => {
                       push(`/Comment/${post._id}`);
                     }}
                   />
+                  {post.comment?.length}
                 </div>
                 <div className="flex gap-2">
                   <div className="font-semibold ">{user?.username}</div>

@@ -41,6 +41,7 @@ const Page = () => {
   const { user, token } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const myId = user?._id;
   const getPostHandle = async () => {
     const allPosts = await fetch("http://localhost:5555/Post/Get", {
@@ -89,118 +90,132 @@ const Page = () => {
     } else {
       toast.error("What is this broo!");
     }
+    getPostHandle();
   };
 
   useEffect(() => {
-    if (!token) {
-      push("/Login");
-      return;
-    } else {
+    if (token) {
       getPostHandle();
     }
   }, [token]);
+  console.log(posts);
+
   return (
     <div>
-      <div>
-        <Header />
-      </div>
+      <Header />
       <div className="mt-10">
-        {posts?.map((post, index) => {
-          return (
-            <div key={index} className="mt-6">
-              <div className="flex items-center gap-2 mb-2 justify-between">
-                <div className="flex items-center gap-2 mb-2">
-                  <Avatar className="w-[42px] h-[42px]">
-                    <AvatarImage src={post.user?.profilePicture} />
-                    <AvatarFallback>
-                      {" "}
-                      {user?.username?.[0]?.toUpperCase() || "?"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <Link href={`/UserProfile/${post!.user!._id!}`}>
-                    <div className="font-semibold text-xs text-gray-800 hover:underline">
-                      {post.user?.username}
-                    </div>
-                  </Link>
-                </div>
-                <div>
-                  {post.user._id === myId ? (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Ellipsis />
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[300px]">
-                        <DialogHeader>
-                          <DialogTitle>Edit and Delete your post</DialogTitle>
-                          <DialogDescription></DialogDescription>
-                        </DialogHeader>
-                        <Button onClick={() => DeletePost(post._id)}>
+        {posts?.map((post, index) => (
+          <div
+            key={index}
+            className="mt-6 border border-gray-200 bg-white rounded-2xl shadow-sm p-3 hover:shadow-md transition-all shadow-2xl">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <Avatar className="w-[42px] h-[42px]">
+                  <AvatarImage src={post.user?.profilePicture} />
+                  <AvatarFallback>
+                    {user?.username?.[0]?.toUpperCase() || "?"}
+                  </AvatarFallback>
+                </Avatar>
+                <Link href={`/UserProfile/${post.user._id}`}>
+                  <div className="font-semibold text-sm text-gray-800 hover:underline">
+                    {post.user?.username}
+                  </div>
+                </Link>
+              </div>
+
+              <div>
+                {post.user._id === myId ? (
+                  <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+                    <DialogTrigger asChild>
+                      <Ellipsis
+                        className="cursor-pointer hover:text-gray-600"
+                        onClick={() => setOpenDialog(true)}
+                      />
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[320px]">
+                      <DialogHeader>
+                        <DialogTitle>Edit or Delete Post</DialogTitle>
+                        <DialogDescription>
+                          Manage your post actions below.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-2">
+                        <Button
+                          onClick={() => {
+                            DeletePost(post._id);
+                            setOpenDialog(false);
+                          }}
+                          className="w-full">
                           Delete Post
                         </Button>
                         <DialogClose asChild>
-                          <Button type="button" variant="secondary">
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            className="w-full"
+                            onClick={() => setOpenDialog(false)}>
                             Cancel
                           </Button>
                         </DialogClose>
-                      </DialogContent>
-                    </Dialog>
-                  ) : post.user.followers.includes(user!._id) ? (
-                    <Button
-                      variant="secondary"
-                      onClick={() => follow(post.user._id)}
-                    >
-                      Unfollow
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="secondary"
-                      onClick={() => follow(post.user._id)}
-                    >
-                      Follow
-                    </Button>
-                  )}
-                </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                ) : post.user.followers.includes(user!._id) ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => follow(post.user._id)}>
+                    Unfollow
+                  </Button>
+                ) : (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => follow(post.user._id)}>
+                    Follow
+                  </Button>
+                )}
               </div>
-
-              <Carousel className="w-full">
-                <CarouselContent>
-                  {post.images.map((postImage, Index) => (
-                    <CarouselItem key={Index}>
-                      <img src={postImage} className="w-full" />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious hidden={true} />
-                <CarouselNext hidden={true} />
-              </Carousel>
-              <div className=" ">
-                <div className="flex gap-2">
-                  <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(myId!) ? (
-                      <Heart color="red" fill="red" />
-                    ) : (
-                      <Heart />
-                    )}
-                  </div>
-                  {post?.like.length}
-                  <MessageCircle
-                    onClick={() => {
-                      push(`/Comment/${post._id}`);
-                    }}
-                  />
-                  {post?.comment?.length}
-                </div>
-                <div className="flex gap-2">
-                  <div className="font-semibold ">{post.user?.username}</div>
-                  {"  "}
-                  <div>{post?.caption}</div>
-                </div>
-              </div>
-              <div className="border w-full border-black"></div>
             </div>
-          );
-        })}
+            <Carousel className="w-full rounded-xl overflow-hidden mb-3">
+              <CarouselContent>
+                {post.images.map((img, idx) => (
+                  <CarouselItem key={idx}>
+                    <img
+                      src={img}
+                      className="w-full h-[400px] object-cover rounded-xl"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+            <div className="flex items-center gap-3 mb-2 text-gray-700">
+              <div
+                onClick={() => LikePosts(post._id)}
+                className="cursor-pointer">
+                {post.like.includes(myId!) ? (
+                  <Heart color="red" fill="red" />
+                ) : (
+                  <Heart />
+                )}
+              </div>
+              <span>{post.like.length}</span>
+              <MessageCircle
+                className="cursor-pointer"
+                onClick={() => push(`/Comment/${post._id}`)}
+              />
+              {post.comment?.length}
+            </div>
+            <div className="flex gap-2">
+              <span className="font-semibold text-sm text-gray-800">
+                {post.user?.username}
+              </span>
+              <span className="text-sm text-gray-700">{post.caption}</span>
+            </div>
+          </div>
+        ))}
       </div>
+
       <div className="mt-10">
         <Footer />
       </div>

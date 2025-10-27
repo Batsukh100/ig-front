@@ -103,11 +103,10 @@ const Page = () => {
         {posts.map((post) => {
           return (
             <div
-              key={post.user._id}
+              key={post._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}
-            >
+              }}>
               <img src={post.images} className="w-[130px] h-[188px] " />
             </div>
           );

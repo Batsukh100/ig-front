@@ -38,7 +38,7 @@ export type userpostType = {
   like: string[];
   caption: string;
   _id: string;
-  images: string | Blob;
+  images: string[];
   user: User;
   userPost: Post;
   setUserPost: Dispatch<SetStateAction<Post>>;
@@ -198,8 +198,7 @@ const Profile = () => {
               key={post._id}
               onClick={() => {
                 push("/MyAll");
-              }}
-            >
+              }}>
               <img src={post.images} className="w-[130px] h-[188px] " />
             </div>
           );

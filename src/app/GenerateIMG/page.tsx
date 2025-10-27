@@ -68,7 +68,7 @@ const GenerateIMG = () => {
       },
       body: JSON.stringify({
         caption: CaptionValue,
-        images: [Image],
+        images: Image,
       }),
     });
     if (response.ok) {
@@ -79,7 +79,7 @@ const GenerateIMG = () => {
     }
   };
 
-  const handleValue = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setInputValue(value);
   };
@@ -94,8 +94,7 @@ const GenerateIMG = () => {
         <Button
           variant="ghost"
           onClick={() => pushToMain()}
-          className="border-gray-300 shadow-lg"
-        >
+          className="border-gray-300 shadow-lg">
           ✕
         </Button>
         <span className="text-lg font-medium text-gray-700">
@@ -120,19 +119,23 @@ const GenerateIMG = () => {
         />
         <Button
           className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md"
-          onClick={() => generateImg()}
-        >
+          onClick={() => generateImg()}>
           {isLoading ? "Generating..." : "Generate Image"}
         </Button>
       </div>
 
       {Image && (
         <div className="w-full shadow-md rounded-lg overflow-hidden">
-          <img
-            src={Image}
-            alt="Generated preview"
-            className="w-full object-cover"
-          />
+          {Image.map((img) => {
+            return (
+              <img
+                key={img}
+                src={img}
+                alt="Generated preview"
+                className="w-full object-cover"
+              />
+            );
+          })}
         </div>
       )}
 
@@ -145,8 +148,7 @@ const GenerateIMG = () => {
         />
         <Button
           className="w-full bg-green-600 text-white hover:bg-green-700 transition-colors shadow-md"
-          onClick={() => createPost()}
-        >
+          onClick={() => createPost()}>
           Create Post
         </Button>
       </div>

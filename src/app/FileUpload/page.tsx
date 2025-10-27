@@ -8,6 +8,7 @@ import { UseUser } from "@/providers/AuthProvider";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import Footer from "../_components/Footer";
 
 const FileUpload = () => {
   const { token } = UseUser();
@@ -58,10 +59,21 @@ const FileUpload = () => {
   return (
     <div>
       <div className="flex">
-        <Input type="file" accept="image/*" onChange={(e) => handleFile(e)} />
-        <Button onClick={() => Uploaded()}>upload</Button>
+        <ImageUp className="w-[200px] h-[100px] " />
+        <div>
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFile(e)}
+            placeholder="Choose File No file chosen"
+            className="w-full h-[100px] text-black text-lg"
+          />
+          <Button onClick={() => Uploaded()} className="w-full">
+            upload
+          </Button>
+        </div>
       </div>
-      <p className="font-bold">Your image:</p>
+      <p className="font-bold text-xl">Your image:</p>
       {""}
       <div className="w-full">
         {img.map((image, index) => {
@@ -74,6 +86,9 @@ const FileUpload = () => {
       </div>
       <Textarea placeholder="caption" onChange={(e) => handleCaption(e)} />
       <Button onClick={() => createPost()}>Post</Button>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
