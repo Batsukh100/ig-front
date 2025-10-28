@@ -56,7 +56,7 @@ const Profile = () => {
   });
 
   const UserPost = async () => {
-    const response = await fetch("http://localhost:5555/Post/Profile", {
+    const response = await fetch("https://ig-back.onrender.com/Post/Profile", {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -68,13 +68,16 @@ const Profile = () => {
   };
 
   const Userfetch = async () => {
-    const res = await fetch(`http://localhost:5555/User/DiffUser/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/User/DiffUser/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setUserData(data.message);
   };
@@ -90,7 +93,7 @@ const Profile = () => {
   };
 
   const editData = async () => {
-    const res = await fetch("http://localhost:5555/User/EditProfile", {
+    const res = await fetch("https://ig-back.onrender.com/User/EditProfile", {
       method: "POST",
       headers: {
         "Content-type": "application/json",

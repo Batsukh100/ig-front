@@ -60,7 +60,7 @@ const GenerateIMG = () => {
   };
 
   const createPost = async () => {
-    const response = await fetch("http://localhost:5555/Post/Create", {
+    const response = await fetch("https://ig-back.onrender.com/Post/Create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,8 @@ const GenerateIMG = () => {
         <Button
           variant="ghost"
           onClick={() => pushToMain()}
-          className="border-gray-300 shadow-lg">
+          className="border-gray-300 shadow-lg"
+        >
           ✕
         </Button>
         <span className="text-lg font-medium text-gray-700">
@@ -119,7 +120,8 @@ const GenerateIMG = () => {
         />
         <Button
           className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md"
-          onClick={() => generateImg()}>
+          onClick={() => generateImg()}
+        >
           {isLoading ? "Generating..." : "Generate Image"}
         </Button>
       </div>
@@ -148,7 +150,8 @@ const GenerateIMG = () => {
         />
         <Button
           className="w-full bg-green-600 text-white hover:bg-green-700 transition-colors shadow-md"
-          onClick={() => createPost()}>
+          onClick={() => createPost()}
+        >
           Create Post
         </Button>
       </div>

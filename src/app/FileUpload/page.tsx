@@ -33,7 +33,7 @@ const FileUpload = () => {
   console.log(file);
 
   const createPost = async () => {
-    const response = await fetch("http://localhost:5555/Post/Create", {
+    const response = await fetch("https://ig-back.onrender.com/Post/Create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

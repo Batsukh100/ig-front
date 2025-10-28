@@ -39,25 +39,31 @@ const Page = () => {
   const [userData, setUserData] = useState<otherProfile | null>(null);
 
   const Postfetch = async () => {
-    const res = await fetch(`http://localhost:5555/Post/user/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Post/user/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setPosts(data);
   };
 
   const Userfetch = async () => {
-    const res = await fetch(`http://localhost:5555/User/DiffUser/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/User/DiffUser/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setUserData(data.message);
   };

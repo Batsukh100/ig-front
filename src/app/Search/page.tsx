@@ -14,7 +14,7 @@ const Search = () => {
   const { push } = useRouter();
 
   const AllUser = async () => {
-    const users = await fetch("http://localhost:5555/User", {
+    const users = await fetch("https://ig-back.onrender.com/User", {
       method: "GET",
       headers: {
         "Content-type": "application/json",

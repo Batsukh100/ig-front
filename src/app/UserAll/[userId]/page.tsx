@@ -22,30 +22,36 @@ const UserAll = () => {
   const [userData, setUserData] = useState<User | null>(null);
 
   const Postfetch = async () => {
-    const res = await fetch(`http://localhost:5555/Post/user/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Post/user/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setPosts(data);
   };
   const Userfetch = async () => {
-    const res = await fetch(`http://localhost:5555/User/DiffUser/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/User/DiffUser/${userId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const data = await res.json();
     setUserData(data.message);
   };
 
   const LikePosts = async (postId: string) => {
-    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+    await fetch(`https://ig-back.onrender.com/Post/like-toggle/${postId}`, {
       method: "POST",
       headers: { authorization: `Bearer ${token}` },
     });

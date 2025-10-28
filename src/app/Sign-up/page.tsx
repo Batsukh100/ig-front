@@ -41,19 +41,22 @@ const Page = () => {
   };
 
   const HandleUserCreate = async () => {
-    const response = await fetch("http://localhost:5555/User/Sign-up", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: userCreate.email,
-        password: userCreate.password,
-        username: userCreate.username,
-        bio: userCreate.bio,
-        profilePicture: userCreate.profilePicture,
-        followers: userCreate.follewers,
-        following: userCreate.following,
-      }),
-    });
+    const response = await fetch(
+      "https://ig-back.onrender.com/User/Sign-up",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userCreate.email,
+          password: userCreate.password,
+          username: userCreate.username,
+          bio: userCreate.bio,
+          profilePicture: userCreate.profilePicture,
+          followers: userCreate.follewers,
+          following: userCreate.following,
+        }),
+      }
+    );
     if (response.ok) {
       const token = await response.json();
       localStorage.setItem("token", token);

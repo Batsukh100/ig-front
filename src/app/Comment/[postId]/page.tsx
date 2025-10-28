@@ -53,13 +53,16 @@ const Comment = () => {
   const myId = user?._id;
   const postId = params.postId;
   const getComment = async () => {
-    const coooms = await fetch(`http://localhost:5555/Comment/Get/${postId}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const coooms = await fetch(
+      `https://ig-back.onrender.com/Comment/Get/${postId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const response = await coooms.json();
 
@@ -69,7 +72,7 @@ const Comment = () => {
   console.log(postId);
 
   const writeComment = async () => {
-    await fetch(`http://localhost:5555/Comment/Create/${postId}`, {
+    await fetch(`https://ig-back.onrender.com/Comment/Create/${postId}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -85,7 +88,7 @@ const Comment = () => {
 
   const DeleteComment = async (commentId: string) => {
     const res = await fetch(
-      `http://localhost:5555/Comment/Delete/${commentId}`,
+      `https://ig-back.onrender.com/Comment/Delete/${commentId}`,
       {
         method: "DELETE",
         headers: {
@@ -103,16 +106,19 @@ const Comment = () => {
   };
 
   const EditComment = async (commentId: string) => {
-    const res = await fetch(`http://localhost:5555/Comment/Edit/${commentId}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        comment: editComment,
-      }),
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Comment/Edit/${commentId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          comment: editComment,
+        }),
+      }
+    );
     if (res.ok) {
       toast.success("Edit comment success");
     } else {

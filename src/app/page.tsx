@@ -42,7 +42,7 @@ const Page = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const myId = user?._id;
   const getPostHandle = async () => {
-    const allPosts = await fetch("http://localhost:5555/Post/Get", {
+    const allPosts = await fetch("https://ig-back.onrender.com/Post/Get", {
       method: "GET",
     });
     const getAllPosts = await allPosts.json();
@@ -50,7 +50,7 @@ const Page = () => {
   };
 
   const LikePosts = async (postId: string) => {
-    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+    await fetch(`https://ig-back.onrender.com/Post/like-toggle/${postId}`, {
       method: "POST",
       headers: { authorization: `Bearer ${token}` },
     });
@@ -58,13 +58,16 @@ const Page = () => {
     getPostHandle();
   };
   const DeletePost = async (postId: string) => {
-    const res = await fetch(`http://localhost:5555/Post/Delete/${postId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Post/Delete/${postId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (res.ok) {
       toast.success("Delete post success");
     } else {
@@ -74,7 +77,7 @@ const Page = () => {
 
   const follow = async (FollowedUserId: string) => {
     const res = await fetch(
-      `http://localhost:5555/User/Follow-toggle/${FollowedUserId}`,
+      `https://ig-back.onrender.com/User/Follow-toggle/${FollowedUserId}`,
       {
         method: "POST",
         headers: {

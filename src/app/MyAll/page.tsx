@@ -39,7 +39,7 @@ const MyAll = () => {
   const { push } = useRouter();
 
   const UserPost = async () => {
-    const response = await fetch("http://localhost:5555/Post/Profile", {
+    const response = await fetch("https://ig-back.onrender.com/Post/Profile", {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -51,7 +51,7 @@ const MyAll = () => {
   };
 
   const LikePosts = async (postId: string) => {
-    await fetch(`http://localhost:5555/Post/like-toggle/${postId}`, {
+    await fetch(`https://ig-back.onrender.com/Post/like-toggle/${postId}`, {
       method: "POST",
       headers: { authorization: `Bearer ${token}` },
     });
@@ -69,13 +69,16 @@ const MyAll = () => {
   };
 
   const DeletePost = async (postId: string) => {
-    const res = await fetch(`http://localhost:5555/Post/Delete/${postId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Post/Delete/${postId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (res.ok) {
       toast.success("Delete post success");
     } else {
@@ -84,17 +87,20 @@ const MyAll = () => {
     UserPost();
   };
   const editPost = async (postId: string) => {
-    const res = await fetch(`http://localhost:5555/Post/EditPost/${postId}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        caption: input.caption,
-        imgUrl: input.imgUrl,
-      }),
-    });
+    const res = await fetch(
+      `https://ig-back.onrender.com/Post/EditPost/${postId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          caption: input.caption,
+          imgUrl: input.imgUrl,
+        }),
+      }
+    );
     if (res.ok) {
       toast.success("Edit post success");
     } else {
@@ -133,7 +139,8 @@ const MyAll = () => {
                 </div>
                 <Dialog
                   open={isOpen === post._id}
-                  onOpenChange={(open) => setIsOpen(open ? post._id : null)}>
+                  onOpenChange={(open) => setIsOpen(open ? post._id : null)}
+                >
                   <DialogTrigger asChild>
                     <Ellipsis />
                   </DialogTrigger>
@@ -149,12 +156,14 @@ const MyAll = () => {
                       onClick={() => {
                         DeletePost(post._id);
                         setIsOpen(null);
-                      }}>
+                      }}
+                    >
                       Delete Post
                     </Button>
                     <Dialog
                       open={Edit === post._id}
-                      onOpenChange={(open) => setEdit(open ? post._id : null)}>
+                      onOpenChange={(open) => setEdit(open ? post._id : null)}
+                    >
                       <DialogTrigger>
                         <Button className="w-[320px]">Edit</Button>
                       </DialogTrigger>
@@ -179,7 +188,8 @@ const MyAll = () => {
                             await editPost(post._id);
                             setIsOpen(null);
                             setEdit(null);
-                          }}>
+                          }}
+                        >
                           Edit post
                         </Button>
                       </DialogContent>
@@ -190,7 +200,8 @@ const MyAll = () => {
                         variant="secondary"
                         onClick={() => {
                           setIsOpen(null);
-                        }}>
+                        }}
+                      >
                         Cancel
                       </Button>
                     </DialogClose>
