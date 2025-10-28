@@ -8,14 +8,18 @@ import { Ellipsis, Heart, MessageCircle } from "lucide-react";
 import { userpostType } from "@/app/Profile/page";
 import Header from "@/app/_components/Header";
 import Footer from "@/app/_components/Footer";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 const UserAll = () => {
   const params = useParams();
   const userId = params.userId;
   const { token } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
-  const [userData, setUserData] = useState<User>([]);
+  const [userData, setUserData] = useState<User | null>(null);
 
   const Postfetch = async () => {
     const res = await fetch(`http://localhost:5555/Post/user/${userId}`, {
@@ -68,7 +72,7 @@ const UserAll = () => {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2 mb-2 ">
                   <img
-                    src={userData?.profilePicture}
+                    src={userData?.profilePicture ?? ""}
                     className="w-[42px] h-[42px] rounded-4xl "
                   />
                   <Link href={`/Profile`}>
@@ -80,7 +84,19 @@ const UserAll = () => {
                 <Ellipsis />
               </div>
 
-              <img src={post?.images} />
+              <Carousel className="w-full rounded-xl overflow-hidden mb-3">
+                <CarouselContent>
+                  {post.images.map((img, idx) => (
+                    <CarouselItem key={idx}>
+                      <img
+                        src={img}
+                        className="w-full h-[400px] object-cover rounded-xl"
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+
               <div>
                 <div className="flex gap-2">
                   <div onClick={() => LikePosts(post._id)}>

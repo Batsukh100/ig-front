@@ -36,7 +36,7 @@ const Page = () => {
   const { token } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
-  const [userData, setUserData] = useState<otherProfile>([]);
+  const [userData, setUserData] = useState<otherProfile | null>(null);
 
   const Postfetch = async () => {
     const res = await fetch(`http://localhost:5555/Post/user/${userId}`, {
@@ -83,7 +83,7 @@ const Page = () => {
         <div className="flex gap-10">
           <div className="pl-4">
             <img
-              src={userData?.profilePicture}
+              src={userData?.profilePicture ?? ""}
               className="w-[77px] h-[77px] rounded-full  "
             />
           </div>
@@ -96,8 +96,8 @@ const Page = () => {
       </div>
       <div className="flex justify-around border-2 h-[60px] items-center mt-4 ">
         <div>{posts.length} Posts</div>
-        <div>{userData.followers?.length} Followers</div>
-        <div>{userData.following?.length} Following</div>
+        <div>{userData?.followers?.length} Followers</div>
+        <div>{userData?.following?.length} Following</div>
       </div>{" "}
       <div className="flex gap-1 flex-wrap ">
         {posts.map((post) => {
@@ -106,8 +106,9 @@ const Page = () => {
               key={post._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}>
-              <img src={post.images} className="w-[130px] h-[188px] " />
+              }}
+            >
+              <img src={post?.images?.[0]} className="w-[130px] h-[188px] " />
             </div>
           );
         })}

@@ -79,7 +79,7 @@ const FileUpload = () => {
         {img.map((image, index) => {
           return (
             <div key={index}>
-              <img src={image} />
+              <img src={image} alt="" />
             </div>
           );
         })}

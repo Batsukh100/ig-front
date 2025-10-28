@@ -27,7 +27,7 @@ type ContextType = {
   login: (email: string, password: string) => Promise<void>;
   user: User | null;
   setUser: Dispatch<SetStateAction<null | User>>;
-  setToken: Dispatch<SetStateAction<null | User>>;
+  setToken: Dispatch<SetStateAction<null | string>>;
   token: string | null;
 };
 
@@ -41,8 +41,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const { push } = useRouter();
-
-  // const { push } = useRouter();
 
   useEffect(() => {
     const localToken = localStorage.getItem("token");

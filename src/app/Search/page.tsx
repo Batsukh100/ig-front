@@ -58,7 +58,7 @@ const Search = () => {
       {/* User List */}
       <div className="w-full max-w-lg space-y-4 mb-10">
         {filterred.length > 0 ? (
-          filterred.map((user, i) => (
+          filterred.map((user) => (
             <div
               key={user?._id}
               onClick={() => push(`UserProfile/${user._id}`)}
@@ -68,7 +68,7 @@ const Search = () => {
             >
               <div className="relative">
                 <Avatar className="w-14 h-14 border-2 border-blue-200 group-hover:border-purple-300 transition-all duration-300">
-                  <AvatarImage src={user.profilePicture} />
+                  <AvatarImage src={user!.profilePicture!} />
                   <AvatarFallback>
                     {user?.username?.[0]?.toUpperCase() || "?"}
                   </AvatarFallback>

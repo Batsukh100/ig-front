@@ -15,8 +15,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
   Dialog,
@@ -107,11 +105,12 @@ const Page = () => {
         {posts?.map((post, index) => (
           <div
             key={index}
-            className="mt-6 border border-gray-200 bg-white rounded-2xl shadow-sm p-3 hover:shadow-md transition-all shadow-2xl">
+            className="mt-6 border border-gray-200 bg-white rounded-2xl p-3 hover:shadow-md transition-all shadow-2xl"
+          >
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <Avatar className="w-[42px] h-[42px]">
-                  <AvatarImage src={post.user?.profilePicture} />
+                  <AvatarImage src={post!.user!.profilePicture!} />
                   <AvatarFallback>
                     {user?.username?.[0]?.toUpperCase() || "?"}
                   </AvatarFallback>
@@ -145,7 +144,8 @@ const Page = () => {
                             DeletePost(post._id);
                             setOpenDialog(false);
                           }}
-                          className="w-full">
+                          className="w-full"
+                        >
                           Delete Post
                         </Button>
                         <DialogClose asChild>
@@ -153,7 +153,8 @@ const Page = () => {
                             type="button"
                             variant="secondary"
                             className="w-full"
-                            onClick={() => setOpenDialog(false)}>
+                            onClick={() => setOpenDialog(false)}
+                          >
                             Cancel
                           </Button>
                         </DialogClose>
@@ -164,14 +165,16 @@ const Page = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => follow(post.user._id)}>
+                    onClick={() => follow(post.user._id)}
+                  >
                     Unfollow
                   </Button>
                 ) : (
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => follow(post.user._id)}>
+                    onClick={() => follow(post.user._id)}
+                  >
                     Follow
                   </Button>
                 )}
@@ -192,7 +195,8 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-2 text-gray-700">
               <div
                 onClick={() => LikePosts(post._id)}
-                className="cursor-pointer">
+                className="cursor-pointer"
+              >
                 {post.like.includes(myId!) ? (
                   <Heart color="red" fill="red" />
                 ) : (

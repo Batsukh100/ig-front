@@ -37,7 +37,7 @@ const Login = () => {
   };
   useEffect(() => {
     if (user) push("/");
-  }, [user]);
+  }, [ user]);
 
   return (
     <div className="flex flex-col items-center gap-5 border-0 border-solid border-e-white ">
