@@ -90,7 +90,7 @@ const Profile = () => {
 
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInput({ ...input, bio: value });
+    setInput({ ...input, username: value });
   };
 
   const editData = async () => {
