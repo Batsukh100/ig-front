@@ -48,6 +48,7 @@ const Profile = () => {
   const { user, token, setToken, setUser } = UseUser();
   const [userPost, setUserPost] = useState<userpostType[]>([]);
   const [userData, setUserData] = useState<otherProfile | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
   const { push } = useRouter();
   const userId = user?._id;
   const [input, setInput] = useState({
@@ -144,9 +145,11 @@ const Profile = () => {
           <div>
             <div className="font-bold text-xl pb-4 ">{userData?.username}</div>
             <div className="flex gap-2 ">
-              <Dialog>
+              <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                 <DialogTrigger asChild>
-                  <Button>Edit Profile</Button>
+                  <Button onClick={() => setOpenDialog(true)}>
+                    Edit Profile
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[500px]">
                   <DialogHeader>
@@ -184,11 +187,22 @@ const Profile = () => {
 
                   <DialogFooter className="pt-4">
                     <DialogClose asChild>
-                      <Button type="button" variant="secondary">
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => setOpenDialog(false)}
+                      >
                         Cancel
                       </Button>
                     </DialogClose>
-                    <Button onClick={() => editData()}>Save changes</Button>
+                    <Button
+                      onClick={() => {
+                        editData();
+                        setOpenDialog(false);
+                      }}
+                    >
+                      Save changes
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

@@ -115,7 +115,7 @@ const Page = () => {
                 <Avatar className="w-[42px] h-[42px]">
                   <AvatarImage src={post!.user!.profilePicture!} />
                   <AvatarFallback>
-                    {user?.username?.[0]?.toUpperCase() || "?"}
+                    {post.user?.username?.[0]?.toUpperCase() || "?"}
                   </AvatarFallback>
                 </Avatar>
                 <Link href={`/UserProfile/${post.user._id}`}>
