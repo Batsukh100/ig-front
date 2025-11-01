@@ -84,8 +84,10 @@ const FileUpload = () => {
           );
         })}
       </div>
-      <Textarea placeholder="caption" onChange={(e) => handleCaption(e)} />
-      <Button onClick={() => createPost()}>Post</Button>
+      <div className="flex gap-1">
+        <Textarea placeholder="caption" onChange={(e) => handleCaption(e)} />
+        <Button onClick={() => createPost()}>Post</Button>
+      </div>
       <div>
         <Footer />
       </div>
