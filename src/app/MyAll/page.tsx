@@ -26,6 +26,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const MyAll = () => {
   const { user, token } = UseUser();
@@ -117,139 +118,141 @@ const MyAll = () => {
 
   console.log(posts);
   return (
-    <div>
-      <div>
-        <Header />
-      </div>
-      <div className="mt-10">
-        {posts?.map((post, index) => {
-          return (
-            <div key={index} className="mt-6">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2 mb-2 ">
-                  <img
-                    src={user!.profilePicture!}
-                    className="w-[42px] h-[42px] rounded-4xl "
-                  />
-                  <Link href={`/Profile`}>
-                    <div className="font-semibold text-xs text-gray-800 hover:underline">
-                      {user?.username}
-                    </div>
-                  </Link>
-                </div>
-                <Dialog
-                  open={isOpen === post._id}
-                  onOpenChange={(open) => setIsOpen(open ? post._id : null)}
-                >
-                  <DialogTrigger asChild>
-                    <Ellipsis />
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[300px]">
-                    <DialogHeader>
-                      <DialogTitle>Edit and Delete your post</DialogTitle>
-                      <DialogDescription>
-                        {" "}
-                        Tanii edit hiih post {post.caption}
-                      </DialogDescription>
-                    </DialogHeader>
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-xl mx-auto mt-10 space-y-10 px-2 sm:px-0">
+        {posts?.map((post, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
+            <div className="flex justify-between items-start">
+              <div className="flex items-center gap-3">
+                <Avatar className="w-[42px] h-[42px]">
+                  <AvatarImage src={user!.profilePicture!} />
+                  <AvatarFallback>
+                    {user?.username?.[0]?.toUpperCase() || "?"}
+                  </AvatarFallback>
+                </Avatar>
+                <Link href={`/Profile`}>
+                  <div className="font-bold text-gray-800 hover:underline">
+                    {user?.username}
+                  </div>
+                </Link>
+              </div>
+              <Dialog
+                open={isOpen === post._id}
+                onOpenChange={(open) => setIsOpen(open ? post._id : null)}>
+                <DialogTrigger asChild>
+                  <button className="p-1 hover:bg-gray-100 rounded-full">
+                    <Ellipsis className="w-5 h-5 text-gray-500" />
+                  </button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[300px]">
+                  <DialogHeader>
+                    <DialogTitle>Manage Post</DialogTitle>
+                    <DialogDescription>
+                      Edit or delete your post: "{post.caption}"
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="space-y-3">
                     <Button
+                      variant="destructive"
+                      className="w-full"
                       onClick={() => {
                         DeletePost(post._id);
                         setIsOpen(null);
-                      }}
-                    >
+                      }}>
                       Delete Post
                     </Button>
                     <Dialog
                       open={Edit === post._id}
-                      onOpenChange={(open) => setEdit(open ? post._id : null)}
-                    >
-                      <DialogTrigger>
-                        <Button className="w-[320px]">Edit</Button>
+                      onOpenChange={(open) => setEdit(open ? post._id : null)}>
+                      <DialogTrigger asChild>
+                        <Button className="w-full">Edit</Button>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-[300px]">
+
+                      <DialogContent className="sm:max-w-[350px]">
                         <DialogHeader>
-                          <DialogTitle>Edit your post</DialogTitle>
-                          <DialogDescription></DialogDescription>
+                          <DialogTitle>Edit Post</DialogTitle>
                         </DialogHeader>
-                        <Input
-                          placeholder="caption"
-                          name="caption"
-                          onChange={(e) => handleInput(e)}
-                        />
-                        <Input
-                          placeholder="image-url"
-                          name="imgUrl"
-                          defaultValue={post.images}
-                          onChange={(e) => handleInput(e)}
-                        />
-                        <Button
-                          onClick={async () => {
-                            await editPost(post._id);
-                            setIsOpen(null);
-                            setEdit(null);
-                          }}
-                        >
-                          Edit post
-                        </Button>
+                        <div className="space-y-3">
+                          <Input
+                            placeholder="Caption"
+                            name="caption"
+                            onChange={(e) => handleInput(e)}
+                          />
+                          <Input
+                            placeholder="Image URL"
+                            name="imgUrl"
+                            defaultValue={post.images}
+                            onChange={(e) => handleInput(e)}
+                          />
+                          <Button
+                            className="w-full"
+                            onClick={async () => {
+                              await editPost(post._id);
+                              setIsOpen(null);
+                              setEdit(null);
+                            }}>
+                            Save Changes
+                          </Button>
+                        </div>
                       </DialogContent>
                     </Dialog>
+
                     <DialogClose asChild>
                       <Button
                         type="button"
                         variant="secondary"
-                        onClick={() => {
-                          setIsOpen(null);
-                        }}
-                      >
+                        className="w-full"
+                        onClick={() => setIsOpen(null)}>
                         Cancel
                       </Button>
                     </DialogClose>
-                  </DialogContent>
-                </Dialog>
-              </div>
-
-              <Carousel className="w-full rounded-xl overflow-hidden mb-3">
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <div className="mt-4 rounded-xl overflow-hidden">
+              <Carousel>
                 <CarouselContent>
                   {post.images.map((img, idx) => (
                     <CarouselItem key={idx}>
                       <img
                         src={img}
-                        className="w-full h-[400px] object-cover rounded-xl"
+                        className="w-full h-[400px] object-cover"
+                        alt="post"
                       />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </Carousel>
-
-              {/* <img src={post?.images[0]} /> */}
-              <div className=" ">
-                <div className="flex gap-2">
-                  <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(user!._id) ? (
-                      <Heart color="red" fill="red" />
-                    ) : (
-                      <Heart />
-                    )}
-                  </div>
-                  {post?.like.length}
-                  <MessageCircle
-                    onClick={() => {
-                      push(`/Comment/${post._id}`);
-                    }}
-                  />
-                  {post.comment?.length}
-                </div>
-                <div className="flex gap-2">
-                  <div className="font-semibold ">{user?.username}</div>
-                  {"  "}
-                  <div>{post?.caption}</div>
-                </div>
-              </div>
-              <div className="border w-full border-black"></div>
             </div>
-          );
-        })}
+            <div className="mt-4 flex items-center gap-3 text-gray-700">
+              <button
+                onClick={() => LikePosts(post._id)}
+                className="transition transform active:scale-110">
+                {post.like.includes(user!._id) ? (
+                  <Heart color="red" fill="red" className="w-6 h-6" />
+                ) : (
+                  <Heart className="w-6 h-6" />
+                )}
+              </button>
+              <span className="text-sm">{post.like.length}</span>
+              <MessageCircle
+                className="w-6 h-6"
+                onClick={() => push(`/Comment/${post._id}`)}
+              />
+              <span className="text-sm">{post.comment?.length}</span>
+            </div>
+            <div className="mt-2 text-gray-800 flex gap-2">
+              <span className="font-bold">{user?.username}</span>
+              <span className="font-sm">{post.caption}</span>
+            </div>
+          </div>
+        ))}
       </div>
       <div className="mt-10">
         <Footer />

@@ -7,6 +7,7 @@ import { UseUser } from "@/providers/AuthProvider";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export type OtherUser = {
   _id: string;
@@ -33,7 +34,7 @@ export type otherProfile = {
 const Page = () => {
   const params = useParams();
   const userId = params.userId;
-  const { token } = UseUser();
+  const { token, user } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
   const [userData, setUserData] = useState<otherProfile | null>(null);
@@ -68,6 +69,25 @@ const Page = () => {
     setUserData(data.message);
   };
 
+  const follow = async (FollowedUserId: string) => {
+    const res = await fetch(
+      `https://ig-back.onrender.com/User/Follow-toggle/${FollowedUserId}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    if (res.ok) {
+      toast.success("Amazing");
+    } else {
+      toast.error("What is this broo!");
+    }
+    Userfetch();
+  };
+
   useEffect(() => {
     if (token) {
       Userfetch();
@@ -80,12 +100,10 @@ const Page = () => {
 
   return (
     <div>
-      {" "}
-      <div className="flex justify-center h-[30px] border-2  ">
+      <div className="flex justify-center h-[30px] border-2 font-bold text-xl">
         {userData?.username}
-        {/* {userId} */}
       </div>
-      <div className="pt-10">
+      <div className="pt-6">
         <div className="flex gap-10">
           <div className="pl-4">
             <img
@@ -93,12 +111,21 @@ const Page = () => {
               className="w-[77px] h-[77px] rounded-full  "
             />
           </div>
-          <div>
-            <div className="font-bold text-xl pb-4 ">{userData?.username}</div>
-            <Button>Edit profile</Button>
-          </div>
+          <div className="font-bold text-xl pb-4 ">{userData?.username}</div>
         </div>
-        <div>{userData?.bio}</div>
+        <div className="text-lg font-semibold">{userData?.bio}</div>
+        <div className="flex pt-4">
+          {userData?.followers.includes(user!._id) ? (
+            <Button className="w-[200px]" onClick={() => follow(user!._id)}>
+              Unfollow
+            </Button>
+          ) : (
+            <Button className="w-[200px]" onClick={() => follow(user!._id)}>
+              Follow
+            </Button>
+          )}
+          <Button className="w-[200px]">Message</Button>
+        </div>
       </div>
       <div className="flex justify-around border-2 h-[60px] items-center mt-4 ">
         <div>{posts.length} Posts</div>
@@ -112,8 +139,7 @@ const Page = () => {
               key={post._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}
-            >
+              }}>
               <img src={post?.images?.[0]} className="w-[130px] h-[188px] " />
             </div>
           );

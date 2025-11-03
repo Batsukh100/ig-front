@@ -16,7 +16,7 @@ import {
 const UserAll = () => {
   const params = useParams();
   const userId = params.userId;
-  const { token } = UseUser();
+  const { token, user } = UseUser();
   const { push } = useRouter();
   const [posts, setPosts] = useState<userpostType[]>([]);
   const [userData, setUserData] = useState<User | null>(null);
@@ -67,69 +67,70 @@ const UserAll = () => {
   console.log(posts);
 
   return (
-    <div>
-      <div>
-        <Header />
-      </div>
-      <div className="mt-10">
-        {posts?.map((post, index) => {
-          return (
-            <div key={index} className="mt-6">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2 mb-2 ">
-                  <img
-                    src={userData?.profilePicture ?? ""}
-                    className="w-[42px] h-[42px] rounded-4xl "
-                  />
-                  <Link href={`/Profile`}>
-                    <div className="font-semibold text-xs text-gray-800 hover:underline">
-                      {userData?.username}
-                    </div>
-                  </Link>
-                </div>
-                <Ellipsis />
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-xl mx-auto mt-10 px-3 space-y-10">
+        {posts?.map((post, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <img
+                  src={userData?.profilePicture ?? ""}
+                  alt="profile"
+                  className="w-10 h-10 rounded-full border border-gray-300 object-cover"
+                />
+                <Link href={`/UserProfile/${userData?._id}`}>
+                  <div className="font-semibold text-sm text-gray-800 hover:underline">
+                    {userData?.username}
+                  </div>
+                </Link>
               </div>
 
-              <Carousel className="w-full rounded-xl overflow-hidden mb-3">
+              <button className="p-1 hover:bg-gray-100 rounded-full transition">
+                <Ellipsis className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+            <div className="mt-4 rounded-xl overflow-hidden">
+              <Carousel className="w-full">
                 <CarouselContent>
                   {post.images.map((img, idx) => (
                     <CarouselItem key={idx}>
                       <img
                         src={img}
-                        className="w-full h-[400px] object-cover rounded-xl"
+                        alt={`post-${idx}`}
+                        className="w-full h-[400px] object-cover"
                       />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
               </Carousel>
-
-              <div>
-                <div className="flex gap-2">
-                  <div onClick={() => LikePosts(post._id)}>
-                    {post.like.includes(userData!._id!) ? (
-                      <Heart color="red" fill="red" />
-                    ) : (
-                      <Heart />
-                    )}
-                  </div>
-                  {post?.like.length}
-                  <MessageCircle
-                    onClick={() => {
-                      push(`/Comment/${post._id}`);
-                    }}
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <div className="font-semibold ">{userData?.username}</div>
-                  {"  "}
-                  <div>{post?.caption}</div>
-                </div>
-              </div>
-              <div className="border w-full border-black"></div>
             </div>
-          );
-        })}
+            <div className="mt-4 flex items-center gap-4 text-gray-700">
+              <button
+                onClick={() => LikePosts(post._id)}
+                className="transition transform active:scale-110">
+                {post.like.includes(user!._id!) ? (
+                  <Heart className="w-6 h-6" color="red" fill="red" />
+                ) : (
+                  <Heart className="w-6 h-6" />
+                )}
+              </button>
+              <span className="text-sm">{post?.like.length}</span>
+              <MessageCircle
+                className="w-6 h-6"
+                onClick={() => push(`/Comment/${post._id}`)}
+              />
+            </div>
+            <div className="mt-3 flex gap-2 text-gray-800">
+              <span className="font-bold">{userData?.username}</span>
+              <span className="text-grey-700">{post?.caption}</span>
+            </div>
+          </div>
+        ))}
       </div>
+
       <div className="mt-10">
         <Footer />
       </div>

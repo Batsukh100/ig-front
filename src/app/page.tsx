@@ -108,8 +108,7 @@ const Page = () => {
         {posts?.map((post, index) => (
           <div
             key={index}
-            className="mt-6 border border-gray-200 bg-white rounded-2xl p-3 hover:shadow-md transition-all shadow-2xl"
-          >
+            className="mt-6 border border-gray-200 bg-white rounded-2xl p-3 hover:shadow-md transition-all shadow-2xl">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <Avatar className="w-[42px] h-[42px]">
@@ -119,7 +118,7 @@ const Page = () => {
                   </AvatarFallback>
                 </Avatar>
                 <Link href={`/UserProfile/${post.user._id}`}>
-                  <div className="font-semibold text-sm text-gray-800 hover:underline">
+                  <div className="font-bold text-gray-800 hover:underline">
                     {post.user?.username}
                   </div>
                 </Link>
@@ -147,8 +146,7 @@ const Page = () => {
                             DeletePost(post._id);
                             setOpenDialog(false);
                           }}
-                          className="w-full"
-                        >
+                          className="w-full">
                           Delete Post
                         </Button>
                         <DialogClose asChild>
@@ -156,8 +154,7 @@ const Page = () => {
                             type="button"
                             variant="secondary"
                             className="w-full"
-                            onClick={() => setOpenDialog(false)}
-                          >
+                            onClick={() => setOpenDialog(false)}>
                             Cancel
                           </Button>
                         </DialogClose>
@@ -168,16 +165,14 @@ const Page = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => follow(post.user._id)}
-                  >
+                    onClick={() => follow(post.user._id)}>
                     Unfollow
                   </Button>
                 ) : (
                   <Button
                     variant="secondary"
                     size="sm"
-                    onClick={() => follow(post.user._id)}
-                  >
+                    onClick={() => follow(post.user._id)}>
                     Follow
                   </Button>
                 )}
@@ -198,8 +193,7 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-2 text-gray-700">
               <div
                 onClick={() => LikePosts(post._id)}
-                className="cursor-pointer"
-              >
+                className="cursor-pointer">
                 {post.like.includes(myId!) ? (
                   <Heart color="red" fill="red" />
                 ) : (
@@ -214,15 +208,14 @@ const Page = () => {
               {post.comment?.length}
             </div>
             <div className="flex gap-2">
-              <span className="font-semibold text-sm text-gray-800">
+              <span className="font-bold text-gray-800">
                 {post.user?.username}
               </span>
-              <span className="text-sm text-gray-700">{post.caption}</span>
+              <span className="text-gray-700">{post.caption}</span>
             </div>
           </div>
         ))}
       </div>
-
       <div className="mt-10">
         <Footer />
       </div>
