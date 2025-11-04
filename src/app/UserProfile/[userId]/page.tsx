@@ -139,7 +139,8 @@ const Page = () => {
               key={post._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}>
+              }}
+            >
               <img src={post?.images?.[0]} className="w-[130px] h-[188px] " />
             </div>
           );

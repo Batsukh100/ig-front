@@ -152,7 +152,7 @@ const MyAll = () => {
                   <DialogHeader>
                     <DialogTitle>Manage Post</DialogTitle>
                     <DialogDescription>
-                      Edit or delete your post: "{post.caption}"
+                      Edit or delete your post: {post.caption}
                     </DialogDescription>
                   </DialogHeader>
 
