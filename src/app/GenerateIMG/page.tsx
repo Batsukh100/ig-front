@@ -23,7 +23,7 @@ const GenerateIMG = () => {
 
     const response = await fetch("/api/generate", {
       method: "POST",
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({ inputValue }),
     });
 
     if (!response.ok) {
@@ -108,7 +108,7 @@ const GenerateIMG = () => {
           className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md"
           onClick={() => generateImg()}
         >
-          {isLoading ? "Generating..." : "Generate Image"}
+          {isLoading === true ? "Generating..." : "Generate Image"}
         </Button>
       </div>
 
