@@ -116,7 +116,11 @@ const Page = () => {
         <div className="text-lg font-semibold">{userData?.bio}</div>
         <div className="flex pt-4">
           {userData?.followers.includes(user!._id) ? (
-            <Button className="w-[200px]" onClick={() => follow(user!._id)}>
+            <Button
+              className="w-[200px]"
+              variant="secondary"
+              onClick={() => follow(user!._id)}
+            >
               Unfollow
             </Button>
           ) : (

@@ -16,32 +16,18 @@ const GenerateIMG = () => {
   const { token } = UseUser();
   const { push } = useRouter();
 
-  const HF_API_KEY = process.env.HF_API_KEY;
-
   const generateImg = async () => {
     if (!inputValue.trim()) return;
 
     setIsLoading(true);
-    const response = await fetch(
-      "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-      {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${HF_API_KEY}`,
-        },
-        body: JSON.stringify({
-          inputs: inputValue,
-          parameters: {
-            negative_prompt: "blurry, bad quality, distorted",
-            num_inference_steps: 20,
-            guidance_scale: 7.5,
-          },
-        }),
-      }
-    );
+
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+    });
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error("Failed to generate");
     } else {
       const blob = await response.blob();
 
