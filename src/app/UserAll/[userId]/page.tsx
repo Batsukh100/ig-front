@@ -100,7 +100,7 @@ const UserAll = () => {
                       <img
                         src={img}
                         alt={`post-${idx}`}
-                        className="w-full h-[400px] object-cover"
+                        className="w-[400px] h-[600px] object-cover"
                       />
                     </CarouselItem>
                   ))}

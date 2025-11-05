@@ -73,6 +73,7 @@ const Page = () => {
     } else {
       toast.error("Yoow gg");
     }
+    getPostHandle();
   };
 
   const follow = async (FollowedUserId: string) => {
@@ -184,7 +185,7 @@ const Page = () => {
                   <CarouselItem key={idx}>
                     <img
                       src={img}
-                      className="w-full h-[400px] object-cover rounded-xl"
+                      className="w-[400px] h-[600px] object-cover rounded-xl"
                     />
                   </CarouselItem>
                 ))}

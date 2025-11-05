@@ -37,21 +37,23 @@ const Login = () => {
   };
   useEffect(() => {
     if (user) push("/");
-  }, [ user]);
+  }, [user]);
 
   return (
-    <div className="flex flex-col items-center gap-5 border-0 border-solid border-e-white ">
+    <div className="flex flex-col items-center gap-5 border-2 border-solid border-e-white shadow-lg ">
       <IGIcon />
       <div className="flex flex-col gap-4 item-center justify-center ">
         <div className="w-[300px]">
           <Input
             placeholder="Email"
             name="email"
+            type="email"
             onChange={(e) => HandleInputs(e)}
           />
           <Input
             placeholder="Password"
             name="password"
+            type="password"
             onChange={(e) => HandleInputs(e)}
           />
         </div>
@@ -59,8 +61,7 @@ const Login = () => {
           <Button
             className="w-[300px] bg-blue-400 "
             variant="ghost"
-            onClick={handleLogin}
-          >
+            onClick={handleLogin}>
             Log in
           </Button>
         </div>
@@ -70,8 +71,7 @@ const Login = () => {
         <Button
           variant="ghost"
           className="text-blue-400"
-          onClick={() => goToSignUp()}
-        >
+          onClick={() => goToSignUp()}>
           Sign up
         </Button>
       </div>

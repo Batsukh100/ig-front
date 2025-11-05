@@ -41,22 +41,19 @@ const Page = () => {
   };
 
   const HandleUserCreate = async () => {
-    const response = await fetch(
-      "https://ig-back.onrender.com/User/Sign-up",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: userCreate.email,
-          password: userCreate.password,
-          username: userCreate.username,
-          bio: userCreate.bio,
-          profilePicture: userCreate.profilePicture,
-          followers: userCreate.follewers,
-          following: userCreate.following,
-        }),
-      }
-    );
+    const response = await fetch("https://ig-back.onrender.com/User/Sign-up", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: userCreate.email,
+        password: userCreate.password,
+        username: userCreate.username,
+        bio: userCreate.bio,
+        profilePicture: userCreate.profilePicture,
+        followers: userCreate.follewers,
+        following: userCreate.following,
+      }),
+    });
     if (response.ok) {
       const token = await response.json();
       localStorage.setItem("token", token);
@@ -70,9 +67,9 @@ const Page = () => {
     }
   };
 
-  // const goToLogin = () => {
-  //   push("/Login");
-  // };
+  const goToLogin = () => {
+    push("/Login");
+  };
 
   return (
     <div className="flex flex-col gap-4 justify-self-center items-center ">
@@ -84,24 +81,22 @@ const Page = () => {
         <Input
           placeholder="Email"
           name="email"
-          onChange={(e) => handleCreate(e)}
-        ></Input>
+          type="email"
+          onChange={(e) => handleCreate(e)}></Input>
         <Input
           placeholder="Password"
           name="password"
-          onChange={(e) => handleCreate(e)}
-        ></Input>
+          type="password"
+          onChange={(e) => handleCreate(e)}></Input>
         <Input
           placeholder="Username"
           name="username"
-          onChange={(e) => handleCreate(e)}
-        ></Input>
+          onChange={(e) => handleCreate(e)}></Input>
       </div>
       <Button
         className="w-[300px] bg-blue-400 "
         variant="secondary"
-        onClick={HandleUserCreate}
-      >
+        onClick={HandleUserCreate}>
         Sign up
       </Button>
       <div className="flex">
@@ -109,8 +104,7 @@ const Page = () => {
         <Button
           variant="ghost"
           className="text-blue-600"
-          // onClick={() => goToLogin()}
-        >
+          onClick={() => goToLogin()}>
           Log in
         </Button>
       </div>

@@ -222,7 +222,7 @@ const MyAll = () => {
                     <CarouselItem key={idx}>
                       <img
                         src={img}
-                        className="w-full h-[400px] object-cover"
+                        className="w-[400px] h-[600px] object-cover"
                         alt="post"
                       />
                     </CarouselItem>

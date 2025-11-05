@@ -119,8 +119,7 @@ const Page = () => {
             <Button
               className="w-[200px]"
               variant="secondary"
-              onClick={() => follow(user!._id)}
-            >
+              onClick={() => follow(user!._id)}>
               Unfollow
             </Button>
           ) : (
@@ -136,16 +135,15 @@ const Page = () => {
         <div>{userData?.followers?.length} Followers</div>
         <div>{userData?.following?.length} Following</div>
       </div>{" "}
-      <div className="flex gap-1 flex-wrap ">
+      <div className="flex flex-wrap ">
         {posts.map((post) => {
           return (
             <div
               key={post._id}
               onClick={() => {
                 push(`/UserAll/${userId}`);
-              }}
-            >
-              <img src={post?.images?.[0]} className="w-[130px] h-[188px] " />
+              }}>
+              <img src={post?.images?.[0]} className="w-[130px] h-[190px]" />
             </div>
           );
         })}
