@@ -40,7 +40,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center gap-5 border-2 border-solid border-e-white shadow-lg justify-center m-2 ">
+    <div className="flex flex-col items-center gap-5 border-2 border-solid border-e-white shadow-lg justify-center m-2 mt-10">
       <IGIcon />
       <div className="flex flex-col gap-4 item-center justify-center ">
         <div className="w-[300px]">
