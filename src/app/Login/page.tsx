@@ -40,7 +40,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center gap-5 border-2 border-solid border-e-white shadow-lg ">
+    <div className="flex flex-col items-center gap-5 border-2 border-solid border-e-white shadow-lg justify-center m-2 ">
       <IGIcon />
       <div className="flex flex-col gap-4 item-center justify-center ">
         <div className="w-[300px]">
@@ -61,7 +61,8 @@ const Login = () => {
           <Button
             className="w-[300px] bg-blue-400 "
             variant="ghost"
-            onClick={handleLogin}>
+            onClick={handleLogin}
+          >
             Log in
           </Button>
         </div>
@@ -71,7 +72,8 @@ const Login = () => {
         <Button
           variant="ghost"
           className="text-blue-400"
-          onClick={() => goToSignUp()}>
+          onClick={() => goToSignUp()}
+        >
           Sign up
         </Button>
       </div>
